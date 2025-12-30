@@ -9,8 +9,6 @@ on:
           - info
           - warning
           - error
-        default: info
-        description: Select the log level
 jobs:
   run:
     runs-on: ubuntu-latest
