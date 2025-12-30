@@ -12,7 +12,7 @@ on:
         default: info
         description: Select the log level
 jobs:
-  log:
+  run:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Selected log level: ${{ inputs['log-level'] }}"
