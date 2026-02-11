@@ -37,7 +37,7 @@ jobs:
       - name: setv2
         run: |
           ls -la
-          echo ${env.google_cloud_version}
+          echo ${{ env.google_cloud_version }}
 
       - name: setv3
         run: |
