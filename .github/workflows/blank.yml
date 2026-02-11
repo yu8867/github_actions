@@ -13,6 +13,21 @@ jobs:
           echo "region=${REGION}" >> $GITHUB_OUTPUT
           REF=""${{ github.base_ref || github.ref }}""
           echo ${REF}
+
+          if [[ "$REF" == "refs/heads/main" || "$REF" == "main" ]]; then
+            ENV_NAME="prd"
+            PROJECT_ID="${{ secrets.GCP_PROJECT_PRD }}"
+          elif [[ "$REF" == "ref/heads/staging" || "$REF" == "staging" ]]; then
+            ENV_NAME="stg"
+            PROJECT_ID="${{ secrets.GCP_PROJECT_STG }}"
+          elif [[ "$REF" == "ref/heads/developer" || "$REF" == "developer" ]]; then
+            ENV_NAME="dev"
+            PROJECT_ID="${{ secrets.GCP_PROJECT_DEV }}"
+          fi
+
+          echo ${ENV_NAME}
+          echo ${PROJECT_ID}
+            
           
             
   
