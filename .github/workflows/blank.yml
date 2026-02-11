@@ -7,7 +7,7 @@ jobs:
   call-ubuntu:
     runs-on: ubuntu-latest
     steps:
-      - id: set
+      - id: setv1
         run: |
           REGION="asia-northeast1"
           echo "region=${REGION}" >> $GITHUB_OUTPUT
@@ -27,6 +27,13 @@ jobs:
 
           echo ${ENV_NAME}
           echo ${PROJECT_ID}
+          echo ${github.event_name}
+          echo ${}
+          ls -la
+      - uses: actions/checkout@v4
+      - id: setv2
+        run: |
+          ls -la
             
           
             
