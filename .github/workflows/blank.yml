@@ -3,11 +3,14 @@ name: CI
 on: 
   workflow_dispatch:
 
+env:
+  google_cloud_version: "1.19.0"
+
 jobs:
   call-ubuntu:
     runs-on: ubuntu-latest
     steps:
-      - id: setv1
+      - name: setv1
         run: |
           REGION="asia-northeast1"
           echo "region=${REGION}" >> $GITHUB_OUTPUT
@@ -29,11 +32,16 @@ jobs:
           echo "PROJECT = ${PROJECT_ID}"
           echo "EVENT = ${{ github.event_name }}"
           ls -la
+          
       - uses: actions/checkout@v4
-      - id: setv2
+      - name: setv2
         run: |
           ls -la
-            
+          echo ${env.google_cloud_version}
+
+      - name: setv3
+        run: |
+          ls -la
           
             
   
