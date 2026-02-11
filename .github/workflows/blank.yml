@@ -11,24 +11,23 @@ jobs:
         run: |
           REGION="asia-northeast1"
           echo "region=${REGION}" >> $GITHUB_OUTPUT
-          REF=""${{ github.base_ref || github.ref }}""
+          REF="${{ github.base_ref || github.ref }}"
           echo ${REF}
 
           if [[ "$REF" == "refs/heads/main" || "$REF" == "main" ]]; then
             ENV_NAME="prd"
             PROJECT_ID="${{ secrets.GCP_PROJECT_PRD }}"
-          elif [[ "$REF" == "ref/heads/staging" || "$REF" == "staging" ]]; then
+          elif [[ "$REF" == "refs/heads/staging" || "$REF" == "staging" ]]; then
             ENV_NAME="stg"
             PROJECT_ID="${{ secrets.GCP_PROJECT_STG }}"
-          elif [[ "$REF" == "ref/heads/developer" || "$REF" == "developer" ]]; then
+          elif [[ "$REF" == "refs/heads/developer" || "$REF" == "developer" ]]; then
             ENV_NAME="dev"
             PROJECT_ID="${{ secrets.GCP_PROJECT_DEV }}"
           fi
 
-          echo ${ENV_NAME}
-          echo ${PROJECT_ID}
-          echo ${github.event_name}
-          echo ${}
+          echo "ENV = ${ENV_NAME}"
+          echo "PROJECT = ${PROJECT_ID}"
+          echo "EVENT = ${{ github.event_name }}"
           ls -la
       - uses: actions/checkout@v4
       - id: setv2
