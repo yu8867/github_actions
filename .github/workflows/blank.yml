@@ -9,8 +9,11 @@ env:
 jobs:
   call-ubuntu:
     runs-on: ubuntu-latest
+    outputs:
+      env_name: ${{ steps.setv1.outputs.env_name }}
+      project: ${{ steps.setv1.outputs.project }}
     steps:
-      - name: setv1
+      - id: setv1
         run: |
           REGION="asia-northeast1"
           echo "region=${REGION}" >> $GITHUB_OUTPUT
@@ -32,6 +35,9 @@ jobs:
           echo "PROJECT = ${PROJECT_ID}"
           echo "EVENT = ${{ github.event_name }}"
           ls -la
+
+          echo "env_name=${ENV_NAME}" >> $GITHUB_OUTPUT
+          echo "project=${PROJECT_ID}" >> $GITHUB_OUTPUT
           
       - uses: actions/checkout@v4
       - name: setv2
@@ -42,6 +48,17 @@ jobs:
       - name: setv3
         run: |
           ls -la
-          
+
+  inherit_call:
+    needs: [call-ubuntu]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/setup-gcloud@v2
+      - id: setv1
+        run: |
+          echo "${{ needs.call-ubuntu.outputs.env_name }}"
+          echo "${{ needs.call-ubuntu.outputs.project }}"
+          gcloud version
+  
             
   
